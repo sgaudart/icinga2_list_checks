@@ -25,7 +25,7 @@ my ($line,$host,$service);
 my $command="";
 my $flag=0;
 
-my $curlcommand="curl -k -s -u $login:$password  https://$hostname:5665/v1/objects/services | python -m json.tool";
+my $curlcommand="curl -k -s -u $login:$pass  https://$hostname:5665/v1/objects/services | python -m json.tool";
 print "curlcommand = $curlcommand\n";
 
 GetOptions (
