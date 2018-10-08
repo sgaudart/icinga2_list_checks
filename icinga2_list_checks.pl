@@ -2,8 +2,10 @@
 #======================================================================
 # Auteur : sgaudart@capensis.fr
 # Date   : 08/10/2018
-# But    : This script can read the RRD file from Centreon, and calculate the average for
-#          all the values. TimeRange could be possible (you can calculate average during Working Hours).
+# But    : this script provides (from icinga2 server) the list:
+#          - hosts
+#          - services
+#          - interpreted commands (with args)
 #          ICINGA2 NEEDED !
 #
 # INPUT :
@@ -15,7 +17,7 @@
 
 
 my $login="root";
-my $passowrd="484804512a84d5b3";
+my $pass="484804512a84d5b3";
 my $servicefile="/tmp/services.json";
 my ($line,$host,$service);
 my $command="";
