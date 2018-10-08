@@ -18,15 +18,12 @@
 use Getopt::Long;
 
 my $hostname="localhost";
-my $login="";
+my $login="root";
 my $pass="";
 my $servicefile="/tmp/services.json";
 my ($line,$host,$service);
 my $command="";
 my $flag=0;
-
-my $curlcommand="curl -k -s -u $login:$pass  https://$hostname:5665/v1/objects/services | python -m json.tool";
-print "curlcommand = $curlcommand\n";
 
 GetOptions (
 "hostname=s" => \$hostname, # string
@@ -36,6 +33,8 @@ GetOptions (
 "help" => \$help) # flag
 or die("Error in command line arguments\n");
 
+my $curlcommand="curl -k -s -u $login:$pass  https://$hostname:5665/v1/objects/services | python -m json.tool";
+print "curlcommand = $curlcommand\n";
 system "$curlcommand > $servicefile";
 
 open (SERVICEFD, "$servicefile") or die "Can't open servicefile : $servicefile\n" ; # reading
