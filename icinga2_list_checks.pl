@@ -40,12 +40,12 @@ or die("Error in command line arguments\n");
 if (($help) || ($pass eq "") || (($login eq "") && ($hostname eq "")))
 {
 	print"./icinga2_list_checks.pl [--host <hostname> --login <login>] --password <pass>
-                 [--verbose]\n";
+                        [--verbose]\n";
 	exit;
 }
 
 my $curlcommand="curl -k -s -u $login:$pass  https://$hostname:5665/v1/objects/services | python -m json.tool";
-print "curlcommand = $curlcommand\n" if $verbose;
+print "[VERBOSE] curlcommand = $curlcommand\n" if $verbose;
 system "$curlcommand > $servicefile";
 
 open (SERVICEFD, "$servicefile") or die "Can't open servicefile : $servicefile\n" ; # reading
