@@ -33,6 +33,17 @@ GetOptions (
 "help" => \$help) # flag
 or die("Error in command line arguments\n");
 
+###############################
+# HELP
+###############################
+
+if (($help) || ($pass eq "") || (($login eq "") && ($hostname eq "")))
+{
+	print"./icinga2_list_checks.pl [--host <hostname> --login <login>] --password <pass>
+                 [--verbose]\n";
+	exit;
+}
+
 my $curlcommand="curl -k -s -u $login:$pass  https://$hostname:5665/v1/objects/services | python -m json.tool";
 print "curlcommand = $curlcommand\n" if $verbose;
 system "$curlcommand > $servicefile";
