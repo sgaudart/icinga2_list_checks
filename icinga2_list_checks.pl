@@ -11,21 +11,32 @@
 # INPUT :
 #          host group name or hosts file + specific service + [metric + start time & end time]
 # OUTPUT :
-#          average values report (ASCII)
+#          list host + services + interpreted checks (CSV format)
 #
 #======================================================================
 
+use Getopt::Long;
 
-my $login="root";
-my $pass="484804512a84d5b3";
+my $hostname="localhost";
+my $login="";
+my $pass="";
 my $servicefile="/tmp/services.json";
 my ($line,$host,$service);
 my $command="";
 my $flag=0;
 
-my $curlcommand="curl -k -s -u $login:$password  https://localhost:5665/v1/objects/services | python -m json.tool";
+my $curlcommand="curl -k -s -u $login:$password  https://$hostname:5665/v1/objects/services | python -m json.tool";
+print "curlcommand = $curlcommand\n";
 
-#system "$curlcommand > $servicefile";
+GetOptions (
+"hostname=s" => \$hostname, # string
+"login=s" => \$login, # string
+"password=s" => \$pass, # string
+"verbose" => \$verbose, # flag
+"help" => \$help) # flag
+or die("Error in command line arguments\n");
+
+system "$curlcommand > $servicefile";
 
 open (SERVICEFD, "$servicefile") or die "Can't open servicefile : $servicefile\n" ; # reading
 while (<SERVICEFD>)
