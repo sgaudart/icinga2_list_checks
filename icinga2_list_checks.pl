@@ -26,7 +26,7 @@ my $command="";
 my $flag=0;
 
 GetOptions (
-"hostname=s" => \$hostname, # string
+"host=s" => \$hostname, # string
 "login=s" => \$login, # string
 "password=s" => \$pass, # string
 "verbose" => \$verbose, # flag
@@ -34,7 +34,7 @@ GetOptions (
 or die("Error in command line arguments\n");
 
 my $curlcommand="curl -k -s -u $login:$pass  https://$hostname:5665/v1/objects/services | python -m json.tool";
-print "curlcommand = $curlcommand\n";
+print "curlcommand = $curlcommand\n" if $verbose;
 system "$curlcommand > $servicefile";
 
 open (SERVICEFD, "$servicefile") or die "Can't open servicefile : $servicefile\n" ; # reading
