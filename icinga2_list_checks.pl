@@ -40,7 +40,7 @@ or die("Error in command line arguments\n");
 if (($help) || ($pass eq "") || (($login eq "") && ($hostname eq "")))
 {
 	print"./icinga2_list_checks.pl [--host <hostname> --login <login>] --password <pass>
-                        [--verbose]\n";
+                         [--verbose]\n";
 	exit;
 }
 
