@@ -11,9 +11,11 @@ The script shows in STDOUT :
 
 ## Requirement
 
-- *inside icinga2* : enable the api feature (command : `icinga2 feature enable api`)
+- icinga2
+- [*inside icinga2*] : enable the api feature (command : `icinga2 feature enable api`)
 - api rest available locally or remotely
 - perl
+- python (for filter json)
 
 ## Tested with
 
@@ -36,6 +38,7 @@ You can find the password here : `/etc/icinga2/conf.d/api-users.conf`
 
 
 **Example1 :**
+
 ```
 ./icinga2_list_checks.pl --password *************
 host01;check_http_80_apache;/usr/lib/nagios/plugins/check_http --IP-address=host01 --port=80
@@ -49,12 +52,19 @@ host02;check_nt_disk_usage_H;/usr/lib/nagios/plugins/check_nt --hostname=host02 
 ```
 
 **Example2 (with filter) :**
+
 ```
 ./icinga2_list_checks.pl --password ************* | grep host2
 host02;check_nt_cpu_load;/usr/lib/nagios/plugins/check_nt --hostname=host02 -l 1,80,90,5,80,90,15,80,90 --variable=CPULOAD
 host02;check_nt_disk_usage_C;/usr/lib/nagios/plugins/check_nt --hostname=host02 -l C --variable=USEDDISKSPACE
 host02;check_nt_disk_usage_E;/usr/lib/nagios/plugins/check_nt --hostname=host02-l E --variable=USEDDISKSPACE
 host02;check_nt_disk_usage_H;/usr/lib/nagios/plugins/check_nt --hostname=host02 -l H --variable=USEDDISKSPACE
+```
+
+**Example3 (sorted !!) :**
+
+```
+./icinga2_list_checks.pl --password ************* | sort
 ```
 
 ## Todo

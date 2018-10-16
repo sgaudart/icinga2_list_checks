@@ -2,14 +2,14 @@
 #======================================================================
 # Auteur : sgaudart@capensis.fr
 # Date   : 08/10/2018
-# But    : this script provides (from icinga2 server) the list:
+# But    : this script provides (from icinga2 server) the list of :
 #          - hosts
 #          - services
 #          - interpreted commands (with args)
 #          ICINGA2 NEEDED !
 #
 # INPUT :
-#          host group name or hosts file + specific service + [metric + start time & end time]
+#          [--host <hostname> --login <login>] --password <pass>
 # OUTPUT :
 #          list host + services + interpreted checks (CSV format)
 #
@@ -46,7 +46,10 @@ if (($help) || ($pass eq "") || (($login eq "") && ($hostname eq "")))
 
 my $curlcommand="curl -k -s -u $login:$pass  https://$hostname:5665/v1/objects/services | python -m json.tool";
 print "[VERBOSE] curlcommand = $curlcommand\n" if $verbose;
-system "$curlcommand > $servicefile";
+
+if (system("$curlcommand > $servicefile")) {
+    die "API access FAILED!";
+}
 
 open (SERVICEFD, "$servicefile") or die "Can't open servicefile : $servicefile\n" ; # reading
 while (<SERVICEFD>)
